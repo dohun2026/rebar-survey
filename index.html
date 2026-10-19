@@ -82,6 +82,24 @@ tr.hit td{background:var(--ok-bg);font-weight:700}
 .kv b{color:var(--title)}
 .hl{color:var(--ok);font-weight:800}
 .bad{color:var(--bad);font-weight:700}
+.sec{font-size:12.5px;font-weight:800;color:var(--title);margin:14px 0 8px;padding-left:8px;border-left:3px solid var(--yellow)}
+.card>.sec:first-child{margin-top:0}
+table.tl td{text-align:left;white-space:normal}
+table.tl td:first-child{white-space:nowrap}
+table.tl td:nth-child(2):not(:last-child){white-space:nowrap}
+#eSmall{display:grid;grid-template-columns:1fr 1fr}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:11px;color:var(--sub);margin:4px 0 10px}
+.legend i{display:inline-block;width:14px;height:6px;border-radius:2px;margin-right:4px;vertical-align:2px}
+.summary{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.srow{display:grid;grid-template-columns:78px 92px 1fr;align-items:center;gap:8px;padding:10px;border-bottom:1px solid var(--border)}
+.srow:last-child{border-bottom:none}
+.stag{font-size:12px;font-weight:800;text-align:center;border-radius:6px;padding:4px 2px}
+.t-slab{background:var(--field);color:var(--sub)}.t-girder{background:var(--soft);color:var(--accent)}.t-small{background:#fdf0dc;color:#b06a00}.t-col{background:var(--bad-bg);color:var(--bad)}
+.ssize{font-size:16px;font-weight:800;color:var(--title);font-variant-numeric:tabular-nums}
+.sbar{font-size:12.5px;font-weight:700}
+.ssub{font-size:11px;color:var(--sub);font-weight:500;margin-top:1px}
+details.warnbox summary{list-style:none}details.warnbox summary::-webkit-details-marker{display:none}
+@media(max-width:400px){.srow{grid-template-columns:66px 84px 1fr}.ssize{font-size:15px}}
 footer{text-align:center;font-size:11px;color:var(--sub);padding:10px 16px 0;line-height:1.6}
 </style>
 </head>
@@ -109,6 +127,108 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:10px 16px 0;lin
   </div>
 
   <details class="card" open>
+    <summary>철근 기초 — 처음 보는 분을 위한 정리</summary>
+    <div class="p"><b>철근이 왜 들어가나</b> — 콘크리트는 누르는 힘(압축)에는 강하지만 당기는 힘(인장)에는 약해서 쉽게 갈라집니다. 철근은 인장을 대신 받아주는 재료이고, 둘을 합친 것이 철근콘크리트(RC)입니다. 그래서 보는 아래쪽(중앙부)과 기둥에 붙는 위쪽(단부)에 철근이 많이 들어갑니다.</div>
+    <div class="p"><b>원형철근 vs 이형철근</b> — 원형철근(SR, 표기 Φ)은 표면이 매끈해 콘크리트와 잘 붙지 않아 지금은 구조용으로 거의 쓰지 않습니다. 이형철근(SD, 표기 D)은 표면에 돌기가 있어 부착력이 좋고, 현재 표준입니다.<span class="src">S3</span><span class="lv b">○</span></div>
+    <div class="svgw" id="barShapeSvg"></div>
+    <div class="p"><b>리브와 마디</b> — <b>리브</b>는 철근 길이 방향으로 이어진 돌기(양쪽 1줄씩), <b>마디</b>는 둘레 방향으로 비스듬히 반복되는 돌기로, 콘크리트와 맞물리는 핵심입니다. 롤링마크는 마디 사이에 새겨집니다.<span class="src">S3</span></div>
+    <div class="sec">부재별 철근 이름</div>
+    <div class="tw"><table class="tl">
+      <tr><th>용어</th><th>뜻</th></tr>
+      <tr><td><b>주근</b></td><td>부재의 휨·축력을 받는 길이방향 주철근 (보 상·하부근, 기둥 수직근)</td></tr>
+      <tr><td><b>스터럽 (늑근)</b></td><td>보에서 주근을 감싸는 고리 모양 철근. 전단력 저항</td></tr>
+      <tr><td><b>띠철근 (후프)</b></td><td>기둥 주근을 감싸는 고리 철근. 주근 좌굴 방지·전단 저항</td></tr>
+      <tr><td><b>나선철근</b></td><td>원형 기둥 주근을 나선형으로 연속해 감는 철근</td></tr>
+      <tr><td><b>배력근</b></td><td>슬래브에서 주근과 직각으로 배치해 하중을 분산시키는 철근</td></tr>
+      <tr><td><b>수축·온도철근</b></td><td>건조수축·온도 변화로 생기는 균열을 막기 위한 최소 철근</td></tr>
+      <tr><td><b>조립근</b></td><td>스터럽 형태를 잡기 위해 보 상부 등에 넣는 철근 (계산상 필요 없는 경우)</td></tr>
+      <tr><td><b>피복두께</b></td><td>콘크리트 표면에서 가장 바깥 철근(스터럽·띠철근 포함) 표면까지 거리. 내구성·내화성 확보</td></tr>
+      <tr><td><b>정착</b></td><td>철근을 다른 부재 속으로 충분히 묻어 빠지지 않게 하는 것</td></tr>
+      <tr><td><b>이음</b></td><td>철근 두 개를 겹치거나(겹침이음) 기계식·용접으로 이어 힘을 전달하는 것</td></tr>
+    </table></div>
+    <div class="sec">도면·보고서 배근 표기 읽는 법</div>
+    <div class="tw"><table class="tl">
+      <tr><th>표기</th><th>읽는 법</th></tr>
+      <tr><td><b>D22</b></td><td>호칭 22의 이형철근 (실제 공칭지름 22.2 mm)</td></tr>
+      <tr><td><b>4-D22</b></td><td>D22 철근 4개</td></tr>
+      <tr><td><b>D13@200</b></td><td>D13 철근을 중심간격 200 mm로 배치 (@ = 간격)</td></tr>
+      <tr><td><b>D10@150 (양단) / @300 (중앙)</b></td><td>스터럽을 단부는 150, 중앙부는 300 간격으로</td></tr>
+      <tr><td><b>HD22, SHD25</b></td><td>강종을 붙인 관용 표기 → 아래 "강종 기호" 참고</td></tr>
+      <tr><td><b>Φ9, Φ13</b></td><td>원형철근(지름 9·13 mm). 오래된 건물 띠철근·슬래브에서 보임</td></tr>
+    </table></div>
+  </details>
+
+  <details class="card" open>
+    <summary>강종 기호 — D, SD, HD, SHD, S, W 는 무엇인가</summary>
+    <div class="tw"><table class="tl">
+      <tr><th>기호</th><th>의미</th><th>근거</th></tr>
+      <tr><td><b>D</b></td><td>Deformed bar, 이형철근. 뒤 숫자는 호칭 (D10, D13 …)</td><td>KS</td></tr>
+      <tr><td><b>Φ / SR</b></td><td>원형철근(Round bar). SR은 강종 기호 (SR240, SR300)</td><td>KS</td></tr>
+      <tr><td><b>SD○○○</b></td><td>이형철근 강종. 숫자 = 항복강도 하한 (SD400 = 400 MPa 이상)</td><td>KS</td></tr>
+      <tr><td><b>SD○○○S</b></td><td>내진용(Seismic). 항복강도 상한·인장강도비 등 요건이 더 엄격</td><td>KS</td></tr>
+      <tr><td><b>SD○○○W</b></td><td>용접용(Weldable). 탄소량을 낮춰 용접성 확보</td><td>KS</td></tr>
+      <tr><td><b>HD</b></td><td>고장력 이형철근의 관용 약칭. 현장에서 보통 SD400을 뜻함</td><td>관용</td></tr>
+      <tr><td><b>SHD / UHD</b></td><td>관용 약칭. 보통 SHD = SD500, UHD = SD600</td><td>관용</td></tr>
+    </table></div>
+    <div class="note">HD·SHD·UHD(그리고 HSD 등)는 <b>KS 강종 기호가 아니라 도면·현장에서 쓰는 관용 표기</b>입니다.<span class="src">S3</span><span class="lv b">○</span> 회사·설계자마다 뜻을 다르게 쓰는 경우가 있으니, 보고서에는 도면 특기사항의 정식 강종(SD400 등)으로 적고, 관용 표기만 있으면 일반사항·구조계산서에서 강종을 확인하세요. "HD10"의 정식 표현은 "D10, SD400"입니다.</div>
+    <div class="sec">현행 KS D 3504 강종 (11종)</div>
+    <div class="tw"><table>
+      <tr><th>용도</th><th>강종</th><th>롤링마크</th><th>항복강도 (MPa)</th></tr>
+      <tr><td rowspan="5">일반용</td><td>SD300</td><td>표시 없음</td><td>300 ~ 420</td></tr>
+      <tr><td><b>SD400</b></td><td><b>4</b></td><td>400 ~ 520</td></tr>
+      <tr><td>SD500</td><td>5</td><td>500 ~ 650</td></tr>
+      <tr><td>SD600</td><td>6</td><td>600 ~ 780</td></tr>
+      <tr><td>SD700</td><td>7</td><td>700 ~ 910</td></tr>
+      <tr><td rowspan="4">내진용</td><td>SD400S</td><td>4S</td><td>400 ~ 520</td></tr>
+      <tr><td>SD500S</td><td>5S</td><td>500 ~ 620</td></tr>
+      <tr><td>SD600S</td><td>6S</td><td>600 ~ 720</td></tr>
+      <tr><td>SD700S</td><td>7S</td><td>700 ~ 820</td></tr>
+      <tr><td rowspan="2">용접용</td><td>SD400W</td><td>4W</td><td>400 ~ 520</td></tr>
+      <tr><td>SD500W</td><td>5W</td><td>500 ~ 650</td></tr>
+    </table></div>
+    <div class="note">KS D 3504:2021 기준 정리<span class="src">S3</span><span class="lv b">○</span>. SD350은 2021년 개정으로 폐지, 구 KS D 3688(내진철근)은 KS D 3504에 통합되었습니다. 기존 건물에서는 SD350이나 구 표기 SD30·SD35·SD40(kgf/mm² 단위)도 나올 수 있습니다.<span class="src">S1</span></div>
+  </details>
+
+  <details class="card" open>
+    <summary>롤링마크 읽는 법</summary>
+    <div class="p"><b>롤링마크</b>는 철근을 압연(rolling)할 때 표면에 새겨 넣는 식별 표시로, 누가 만든 어떤 강도의 철근인지를 알려줍니다. 철근 길이 방향으로 <b>1.5 m 간격</b>마다 반복되고, 마디 사이(리브 쪽)에 있습니다.<span class="src">S3</span><span class="lv b">○</span></div>
+    <div class="svgw" id="rollSvg"></div>
+    <div class="tw"><table class="tl">
+      <tr><th>순서</th><th>항목</th><th>표시</th></tr>
+      <tr><td>①</td><td><b>원산지</b></td><td>국가코드 2자리 — KR(한국), JP, CN(중국), VN 등</td></tr>
+      <tr><td>②</td><td><b>제조자</b></td><td>제강사 약어 — HS(현대제철), DK(동국제강), DH(대한제강), HY(환영철강), YK(YK스틸) 등</td></tr>
+      <tr><td>③</td><td><b>호칭</b></td><td>10, 13, 16, 19, 22, 25 … (D 뒤 숫자)</td></tr>
+      <tr><td>④</td><td><b>강종</b></td><td>숫자 = 강도(4 = SD400), +S 내진, +W 용접용, SD300은 표시 없음</td></tr>
+    </table></div>
+    <div class="sec">읽기 예시</div>
+    <div class="tw"><table class="tl">
+      <tr><th>롤링마크</th><th>해석</th></tr>
+      <tr><td><b>KR HS 19 4</b></td><td>한국 · 현대제철 · D19 · SD400</td></tr>
+      <tr><td><b>KR DK 22 4S</b></td><td>한국 · 동국제강 · D22 · SD400S(내진)</td></tr>
+      <tr><td><b>KR DH 16 4W</b></td><td>한국 · 대한제강 · D16 · SD400W(용접용)</td></tr>
+      <tr><td><b>KR HS 13</b></td><td>강종 표시 없음 → 한국 · 현대제철 · D13 · SD300</td></tr>
+      <tr><td><b>KR HS 25 ●●●</b></td><td>2021년 개정 전 점 표기 — 점 2개 SD400, 3개 SD500, 4개 SD600</td></tr>
+    </table></div>
+    <div class="note">2021년 개정 전에는 강종을 숫자 또는 점(●) 중 선택해 표시할 수 있었고, 현재는 숫자로 단일화되었습니다.<span class="src">S3</span> 오래된 철근은 롤링마크 체계가 지금과 달랐을 수 있습니다.</div>
+    <div class="sec">기존 건물 조사에서 활용</div>
+    <div class="p">부분 파취로 철근이 노출되면 <b>와이어 브러시로 녹을 털고 마디 사이를 손전등으로 비스듬히 비춰</b> 보면 글자가 잘 보입니다. 강종 숫자가 보이면 항복강도 가정의 직접 근거가 되므로 사진을 남겨 보고서에 첨부하는 것이 좋습니다. 강종 표시가 없는 경우 SD300일 수도, 표시 규정 이전 철근일 수도 있으니 단정하지 말고 연대별 기본값이나 인장시험으로 판단합니다.</div>
+    <div class="note">반입 시 묶음 꼬리표(태그) 색상으로도 강종을 구분하나(예: SD400 노란색), 2021년 개정 후 롤링마크로 표시한 경우 생략 가능하고 제조사별로 다를 수 있다고 정리되어 있어<span class="src">S3</span><span class="lv c">△</span>, 기존 건물 조사에는 쓰기 어렵습니다.</div>
+  </details>
+
+  <details class="card">
+    <summary>최소 피복두께 (KDS 14 20 50)</summary>
+    <div class="tw"><table class="tl">
+      <tr><th>조건 (현장치기 콘크리트)</th><th>최소 피복</th></tr>
+      <tr><td>수중에서 치는 콘크리트</td><td>100 mm</td></tr>
+      <tr><td>흙에 접하여 친 후 영구히 흙에 묻히는 콘크리트</td><td>75 mm</td></tr>
+      <tr><td>흙에 접하거나 옥외 공기에 직접 노출 — D19 이상</td><td>50 mm</td></tr>
+      <tr><td>흙에 접하거나 옥외 공기에 직접 노출 — D16 이하</td><td>40 mm</td></tr>
+      <tr><td>실내(옥외·흙에 접하지 않음) 슬래브·벽체·장선 — D35 이하</td><td>20 mm</td></tr>
+      <tr><td>실내 보·기둥</td><td>40 mm</td></tr>
+    </table></div>
+    <div class="note">KDS 14 20 50 피복두께 표<span class="src">S13</span><span class="lv c">△</span>. 피복은 가장 바깥 철근(스터럽·띠철근) 표면 기준이라, 탐사기로 잰 주근 깊이와 비교할 때는 스터럽 지름만큼 차이가 납니다.</div>
+  </details>
+  <details class="card">
     <summary>철근 규격 (KS D 3504)</summary>
     <div class="p">이형철근의 <b>공칭지름</b>은 실제 외경이 아니라 <b>단위 길이당 무게가 같은 원형봉강의 지름</b>입니다.<span class="src">S2</span><span class="lv b">○</span>
       그래서 마디(돌기)를 포함해 재면 공칭지름보다 크게 나옵니다. 아래 "마디 포함 외경"은 KS의 마디 높이 허용범위로 계산한 값(공칭지름 + 2 × 마디높이)입니다.</div>
@@ -116,7 +236,7 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:10px 16px 0;lin
     <div class="note">공칭지름·단면적·단위무게·마디높이·마디간격: KS D 3504 기준 제강사 치수표<span class="src">S1</span><span class="lv a">◎</span> (D35·D38 마디 규정은 확보한 자료에 없어 생략). 단위무게 허용차(1본): D10~D16 미만 ±6%, D16~D29 미만 ±5%, D29 이상 ±4%<span class="src">S1</span>.</div>
   </details>
 
-  <details class="card" open>
+  <details class="card">
     <summary>실측 외경 → 호칭 판정</summary>
     <div class="p">노출된 철근을 캘리퍼스로 <b>마디 꼭대기끼리</b> 잰 외경을 넣으면, KS 허용범위 안에 드는 호칭을 찾습니다.</div>
     <div class="grid2">
@@ -127,11 +247,8 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:10px 16px 0;lin
   </details>
 
   <details class="card">
-    <summary>강종 표기와 연대별 철근 강도</summary>
-    <div class="p"><b>현행 강종</b>: KS D 3504:2021은 이형철근을 일반용(SD), 용접용(W), 내진용(S)으로 나누어 SD300~SD700 등 11개 강종을 규정하며, 구 내진철근 표준(KS D 3688)은 이 표준에 통합되었습니다.<span class="src">S3</span><span class="lv b">○</span></div>
-    <div class="p"><b>구 표기</b>: 과거에는 kgf/mm² 단위의 SD30·SD35·SD40, 원형봉강 SR24 등으로 표기했습니다(예: SD30 → 현행 SD300, 항복점 30.6 kgf/mm² 이상 표기).<span class="src">S1</span><span class="lv b">○</span></div>
-    <div class="p"><b>롤링마크</b>(철근 표면 양각): 원산지 → 제조사 → 호칭 → 강종 순. 강종은 SD300 표기 없음, SD400은 "4", 내진은 "4S"처럼 S를 붙입니다.<span class="src">S3</span><span class="lv b">○</span> 기존 건물에서 철근이 노출되면 강종 판단의 직접 근거가 됩니다.</div>
-    <div class="p" style="margin-top:10px"><b>연대별 재료 기본값</b> (도면·시험 자료가 없을 때 내진성능평가에 쓰는 철근 항복강도 기본값)<span class="src">S4</span><span class="lv c">△</span></div>
+    <summary>연대별 철근 강도</summary>
+    <div class="p"><b>연대별 재료 기본값</b> (도면·시험 자료가 없을 때 내진성능평가에 쓰는 철근 항복강도 기본값)<span class="src">S4</span><span class="lv c">△</span></div>
     <div class="tw"><table>
       <tr><th>건설연도</th><th>1970 이전</th><th>1971~1987</th><th>1988~2000</th><th>2001 이후</th></tr>
       <tr><td>철근 항복강도 기본값 (MPa)</td><td>240</td><td>240</td><td>240 ¹⁾</td><td>300</td></tr>
@@ -216,27 +333,45 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:10px 16px 0;lin
 
 <!-- =================== 3. 부재 추정 =================== -->
 <section class="view" id="v3">
-  <div class="warnbox"><b>읽기 전에</b> — 이 결과는 <b>현행 KDS로 지금 새로 설계한다면</b> 필요한 최소한의 크기·철근을 <b>중력하중(고정+활하중)만으로</b> 추정한 하한 참고값입니다. 지진·풍하중, 골조 휨모멘트에 의한 기둥 휨, 전단·처짐 상세검토는 빠져 있습니다. 오래된 건물은 당시 기준(허용응력설계 등)으로 설계되어 실제 배근이 이와 다를 수 있으므로, <b>탐사 결과가 이 값보다 현저히 작으면 재확인 또는 실제 부족 여부 검토</b>의 신호로 쓰세요.</div>
+  <details class="warnbox"><summary style="cursor:pointer;font-weight:700">⚠ 하한 참고값입니다 (눌러서 읽기)</summary>
+    <div style="margin-top:6px">현행 KDS로 <b>지금 새로 설계한다면</b> 필요한 최소 크기·철근을 <b>중력하중(고정+활하중)만으로</b> 추정한 값입니다. 지진·풍하중, 골조 휨에 의한 기둥 휨, 전단·처짐 상세검토는 빠져 있습니다. 오래된 건물은 당시 기준으로 설계되어 실제와 다를 수 있으니, <b>탐사 결과가 이 값보다 현저히 작으면 재확인·부족 여부 검토</b>의 신호로 쓰세요.</div></details>
+
   <div class="card">
-    <h2>조건 입력</h2>
+    <div class="sec">① 용도 · 하중</div>
     <div class="f"><label>용도 (KDS 41 기본등분포활하중)<span class="src">S11</span></label><select id="eUse"></select></div>
-    <div class="grid3">
-      <div class="f"><label>활하중 (kN/m²)</label><input id="eLL" type="number" step="0.1" inputmode="decimal"></div>
-      <div class="f"><label>기둥 간격 X (m)</label><input id="eLx" type="number" step="0.1" value="3.6" inputmode="decimal"></div>
-      <div class="f"><label>기둥 간격 Y (m)</label><input id="eLy" type="number" step="0.1" value="7.2" inputmode="decimal"></div>
-      <div class="f"><label>기둥이 받치는 층수 (지붕 포함)</label><input id="eFl" type="number" step="1" value="4" inputmode="numeric"></div>
+    <div class="grid2">
+      <div class="f"><label>활하중 kN/m²</label><input id="eLL" type="number" step="0.1" inputmode="decimal"></div>
+      <div class="f"><label>마감·천장·설비 kN/m² (가정)</label><input id="eFin" type="number" step="0.1" value="1.5" inputmode="decimal"></div>
+    </div>
+    <div class="seg" id="ePart"><button class="on" data-v="0">칸막이 하중 없음</button><button data-v="1">칸막이 +1.0</button></div>
+
+    <div class="sec">② 평면 (기둥 간격)</div>
+    <div class="grid2">
+      <div class="f"><label>X 방향 (m)</label><input id="eLx" type="number" step="0.1" value="3.6" inputmode="decimal"></div>
+      <div class="f"><label>Y 방향 (m)</label><input id="eLy" type="number" step="0.1" value="7.2" inputmode="decimal"></div>
+    </div>
+    <div class="f"><label>작은보 배치</label></div>
+    <div class="seg" id="eSmall">
+      <button class="on" data-v="0">없음</button><button data-v="1">긴 방향 1줄</button>
+      <button data-v="2">+ 연결보 1개</button><button data-v="3">+ 연결보 2개</button>
+    </div>
+    <div class="svgw" id="planPrev"></div>
+
+    <div class="sec">③ 층 · 재료</div>
+    <div class="grid2">
+      <div class="f"><label>받치는 층수 (지붕 포함)</label><input id="eFl" type="number" step="1" value="4" inputmode="numeric"></div>
       <div class="f"><label>층고 (m)</label><input id="eH" type="number" step="0.1" value="3.6" inputmode="decimal"></div>
-      <div class="f"><label>마감·천장·설비 하중 (kN/m²)</label><input id="eFin" type="number" step="0.1" value="1.5" inputmode="decimal"></div>
       <div class="f"><label>fck (MPa)</label><input id="eFck" type="number" step="1" value="21" inputmode="numeric"></div>
       <div class="f"><label>fy (MPa)</label><select id="eFy"><option>300</option><option selected>400</option><option>500</option></select></div>
-      <div class="f"><label>칸막이벽 하중 +1.0</label><select id="ePart"><option value="0">미적용</option><option value="1">적용</option></select></div>
       <div class="f"><label>보 주근</label><select id="eBB"></select></div>
       <div class="f"><label>기둥 주근</label><select id="eCB"></select></div>
-      <div class="f"><label>보 위치</label><select id="eBP"><option value="interior">내부 경간</option><option value="exterior">외측 경간</option></select></div>
     </div>
+
+    <div class="sec">④ 검토 위치</div>
+    <div class="seg" id="eBP"><button class="on" data-v="interior">보: 내부 경간</button><button data-v="exterior">보: 외측 경간</button></div>
     <div class="seg" id="eCP"><button class="on" data-v="interior">내부 기둥</button><button data-v="edge">외부 기둥</button><button data-v="corner">모서리 기둥</button></div>
-    <div class="note">마감·천장·설비 하중 1.5 kN/m²는 <b>가정값</b>입니다(현장 마감 상태에 맞게 수정). 칸막이벽 하중은 사무실 등 가동성 경량칸막이 가능 시 활하중에 1.0 kN/m² 추가(활하중 4.0 이상이면 제외 가능).<span class="src">S11</span></div>
   </div>
+
   <div id="estResult"></div>
 </section>
 
@@ -426,115 +561,135 @@ function reqAs(Mu, b, d, fck, fy){            // Mu: N·mm, φ = 0.85
   if (k <= 0) return null;
   return 0.85 * fck / fy * (1 - Math.sqrt(k)) * b * d;
 }
-function designBeam(wu, L, ln, pos, o, colW){
-  // wu: kN/m (자중 제외), L, ln: m
-  var coef = pos === 'interior' ? {neg:11, pos:16, negLbl:'wl²/11 (내부 받침부)', posLbl:'wl²/16 (내부 경간)'}
-                                : {neg:10, pos:14, negLbl:'wl²/10 (첫 내부 받침부)', posLbl:'wl²/14 (외측 경간, 기둥과 일체)'};
-  var hminFactor = pos === 'interior' ? 21 : 18.5;
-  var fyAdj = 0.43 + o.fy / 700;
-  var hmin = L * 1000 / hminFactor * fyAdj;
-  var h = Math.max(ceilTo(hmin, 50), 400);
-  var B = bar(o.beamBar), st = 10, cover = 40;
-  for (var it = 0; it < 30; it++) {
-    var b = Math.max(300, ceilTo(h * 0.5, 50));
-    var sw = 24 * (b/1000) * ((h - o.slabT) / 1000) * 1.2;   // kN/m (계수 고정하중, 슬래브 아래 부분)
-    var w = wu + sw;
-    var Mneg = w * ln * ln / coef.neg, Mpos = w * ln * ln / coef.pos;   // kN·m
+/* 단순보 최대 모멘트(등분포 + 집중하중), 경간 L(m), 하중 kN, kN/m */
+function simpleMax(L, w, pts){
+  var RA = w * L / 2;
+  pts.forEach(function(p){ RA += p.P * (L - p.x) / L; });
+  var m = 0;
+  for (var i = 0; i <= 200; i++) {
+    var x = L * i / 200, v = RA * x - w * x * x / 2;
+    pts.forEach(function(p){ if (x > p.x) v -= p.P * (x - p.x); });
+    if (v > m) m = v;
+  }
+  return m;
+}
+/* 보 1개 설계: spec = {L, ln, wDist(자중 제외, kN/m), pts:[{P, x(경간 L 기준 위치)}], pos, minB, minH, fck, fy, bar, slabT} */
+function designMember(sp){
+  var fyAdj = 0.43 + sp.fy / 700;
+  var hminFactor = sp.pos === 'interior' ? 21 : 18.5;
+  var hmin = sp.L * 1000 / hminFactor * fyAdj;
+  var h = Math.max(ceilTo(hmin, 50), sp.minH);
+  var rN = sp.pos === 'interior' ? 8/11 : 8/10, rP = sp.pos === 'interior' ? 8/16 : 8/14;
+  var B = bar(sp.bar), st = 10, cover = 40;
+  var ptsLn = sp.pts.map(function(p){ return {P:p.P, x:p.x * sp.ln / sp.L}; });
+  for (var it = 0; it < 40; it++) {
+    var b = Math.max(sp.minB, ceilTo(h * 0.5, 50));
+    var sw = 1.2 * 24 * (b/1000) * ((h - sp.slabT)/1000);
+    var w = sp.wDist + sw;
+    var M0 = simpleMax(sp.ln, w, ptsLn);
+    var Mneg = M0 * rN, Mpos = M0 * rP;
     var d = h - cover - st - B.d/2;
-    var lim = beamAsLimits('KDS', o.fck, o.fy, b, d);
-    // φ = 0.85를 쓰려면 인장지배(εt ≥ 0.005, fy>400은 2.5εy) 단면이어야 하므로 그 한도로 제한
-    var P = blockParams('KDS', o.fck), etT = o.fy <= 400 ? 0.005 : 2.5 * o.fy / 200000;
-    var asTC = P.eta * 0.85 * o.fck * P.beta1 * (P.ecu / (P.ecu + etT) * d) * b / o.fy;
-    lim.asMax = Math.min(lim.asMax, asTC);
-    var AsN = reqAs(Mneg * 1e6, b, d, o.fck, o.fy), AsP = reqAs(Mpos * 1e6, b, d, o.fck, o.fy);
+    var lim = beamAsLimits('KDS', sp.fck, sp.fy, b, d);
+    var P = blockParams('KDS', sp.fck), etT = sp.fy <= 400 ? 0.005 : 2.5 * sp.fy / 200000;
+    var asTC = P.eta * 0.85 * sp.fck * P.beta1 * (P.ecu / (P.ecu + etT) * d) * b / sp.fy;
+    var asCap = Math.min(lim.asMax, asTC);
+    var AsN = reqAs(Mneg * 1e6, b, d, sp.fck, sp.fy), AsP = reqAs(Mpos * 1e6, b, d, sp.fck, sp.fy);
     var perLayer = Math.floor((b - 2*(cover + st) - B.d) / (B.d + clearBeam(B.d, 25))) + 1;
-    if (AsN && AsP && AsN <= lim.asMax && AsP <= lim.asMax) {
+    if (AsN && AsP && AsN <= asCap && AsP <= asCap) {
       var nN = Math.max(2, Math.ceil(Math.max(AsN, lim.asMin) / B.A));
       var nP = Math.max(2, Math.ceil(Math.max(AsP, lim.asMin) / B.A));
       if (nN <= perLayer && nP <= perLayer) {
-        return {b:b, h:h, hmin:hmin, d:d, w:w, sw:sw, Mneg:Mneg, Mpos:Mpos, AsN:AsN, AsP:AsP, asMin:lim.asMin,
-                asMax:lim.asMax, nN:nN, nP:nP, perLayer:perLayer, coef:coef, hminFactor:hminFactor, fyAdj:fyAdj, ln:ln, L:L, B:B};
+        var sumP = sp.pts.reduce(function(s, p){ return s + p.P; }, 0);
+        return {b:b, h:h, hmin:hmin, hminFactor:hminFactor, fyAdj:fyAdj, d:d, wDist:sp.wDist, sw:sw, w:w, pts:sp.pts, M0:M0,
+                Mneg:Mneg, Mpos:Mpos, rN:rN, rP:rP, AsN:AsN, AsP:AsP, asMin:lim.asMin, nN:nN, nP:nP, perLayer:perLayer,
+                L:sp.L, ln:sp.ln, B:B, R:(w * sp.L + sumP) / 2};
       }
     }
     h += 50;
   }
   return null;
 }
+/* 슬래브 패널 한 변이 보에 주는 등가 등분포하중(한쪽 면, kN/m) — 45° 분할의 휨 등가 */
+function edgeLoad(wu, along, across){
+  // along: 보와 나란한 패널 변 길이, across: 보에 직각인 변 길이
+  if (along >= across) return wu * across / 2 * (1 - Math.pow(across / along, 2) / 3);   // 사다리꼴
+  return wu * along / 3;                                                              // 삼각형
+}
 function estimate(o){
-  // o: {use, LL, Lx, Ly, floors, storyH, finish, partition, fck, fy, beamBar, colBar, beamPos, colPos}
+  // o: {LL, Lx, Ly, floors, storyH, finish, partition, fck, fy, beamBar, colBar, beamPos, colPos, small(0~3)}
   var Lx = Math.min(o.Lx, o.Ly), Ly = Math.max(o.Lx, o.Ly);
-  var r = {Lx:Lx, Ly:Ly};
+  var small = o.small || 0;
+  var nx = small >= 1 ? 2 : 1, ny = small >= 2 ? small : 1;
+  var px = Lx / nx, py = Ly / ny;
+  var r = {Lx:Lx, Ly:Ly, small:small, nx:nx, ny:ny, px:px, py:py};
   var fyAdj = 0.43 + o.fy / 700;
-  // 슬래브
-  var ratio = Ly / Lx;
-  r.oneWay = ratio >= 2;
+  var a = Math.min(px, py), bb = Math.max(px, py);
+  r.panelA = a; r.panelB = bb;
+  r.oneWay = bb / a >= 2;
   if (r.oneWay) {
-    r.slabHmin = Lx * 1000 / 28 * fyAdj;
-    r.slabRule = 'l/28 × (0.43+fy/700) — 1방향 양단연속';
+    r.slabHmin = a * 1000 / 28 * fyAdj;
+    r.slabRule = '1방향 양단연속: l/28 × (0.43+fy/700), l = ' + a.toFixed(2) + ' m';
   } else {
-    var lnL = (Ly - 0.4) * 1000, beta = Ly / Lx;
+    var lnL = (bb - 0.3) * 1000, beta = bb / a;
     r.slabHmin = Math.max(lnL * (800 + o.fy / 1.4) / (36000 + 9000 * beta), 90);
-    r.slabRule = 'ln(800+fy/1.4)/(36000+9000β) — 2방향(보 강성 충분, αfm>2), ln = Ly − 0.4 m 가정';
+    r.slabRule = '2방향: ln(800+fy/1.4)/(36000+9000β), ln = ' + (bb - 0.3).toFixed(2) + ' m(긴 변 − 0.3 가정), β = ' + beta.toFixed(2);
   }
   r.slabT = Math.max(ceilTo(r.slabHmin, 10), r.oneWay ? 100 : 90);
-  o.slabT = r.slabT;
-  // 하중
   r.wD = 24 * r.slabT / 1000 + o.finish;
   r.wL = o.LL + (o.partition ? 1.0 : 0);
   r.wu = 1.2 * r.wD + 1.6 * r.wL;
   r.wuRoof = 1.2 * r.wD + 1.6 * 1.0;
-  // 1방향 슬래브 주근 (내부 경간 부모멘트 wl²/11)
+  r.slabAsMin = slabRatio('KDS', o.fy) * 1000 * r.slabT;
   if (r.oneWay) {
-    var lnS = Lx - 0.3;
-    var MuS = r.wu * lnS * lnS / 11;
-    var dS = r.slabT - 20 - 6.35;
+    var lnS = a - 0.3, MuS = r.wu * lnS * lnS / 11, dS = r.slabT - 20 - 6.35;
     var AsS = reqAs(MuS * 1e6, 1000, dS, o.fck, o.fy);
-    var asMinS = slabRatio('KDS', o.fy) * 1000 * r.slabT;
-    var Bs = bar('D13');
-    r.slabMu = MuS; r.slabAs = AsS; r.slabAsMin = asMinS;
-    r.slabSpacing = AsS ? Math.min(1000 * Bs.A / Math.max(AsS, asMinS), 2 * r.slabT, 300) : null;
-  } else {
-    r.slabAsMin = slabRatio('KDS', o.fy) * 1000 * r.slabT;
+    r.slabMu = MuS; r.slabAs = AsS;
+    r.slabSpacing = AsS ? Math.min(1000 * 126.7 / Math.max(AsS, r.slabAsMin), 2 * r.slabT, 300) : null;
   }
-  // 보에 전달되는 등가 등분포하중 (삼각형/사다리꼴 → 휨 등가), 내부 보 = 양쪽 슬래브
-  var sides = 2;
-  var wLongPer = r.wu * Lx / 2 * (1 - Math.pow(Lx / Ly, 2) / 3);
-  var wShortPer = r.wu * Lx / 3;
-  r.wLong = wLongPer * sides; r.wShort = wShortPer * sides;
-  var colGuess = 0.5;
+  // 한쪽 면 하중: Y방향 보(길이 py 구간), X방향 보(길이 px 구간)
+  var fY = edgeLoad(r.wu, py, px), fX = edgeLoad(r.wu, px, py);
+  r.fY = fY; r.fX = fX;
+  var base = {pos:o.beamPos, fck:o.fck, fy:o.fy, bar:o.beamBar, slabT:r.slabT};
+  function mk(extra){ var s = {}; for (var k in base) s[k] = base[k]; for (var k2 in extra) s[k2] = extra[k2]; return s; }
+  var colW = 0.5;
   for (var pass = 0; pass < 2; pass++) {
-    r.beamLong = designBeam(r.wLong, Ly, Ly - colGuess, o.beamPos, o);
-    r.beamShort = designBeam(r.wShort, Lx, Lx - colGuess, o.beamPos, o);
-    if (!r.beamLong || !r.beamShort) return r;
+    r.conn = null; r.lsb = null;
+    var connPts = [];
+    if (small >= 2) {
+      r.conn = designMember(mk({L:px, ln:px - 0.3, wDist:2 * fX, pts:[], minB:250, minH:350}));
+      if (!r.conn) return r;
+      for (var i = 1; i < ny; i++) connPts.push({P:2 * r.conn.R, x:i * py});
+    }
+    if (small >= 1) {
+      r.lsb = designMember(mk({L:Ly, ln:Ly - 0.3, wDist:2 * fY, pts:connPts, minB:250, minH:350}));
+      if (!r.lsb) return r;
+    }
+    r.gY = designMember(mk({L:Ly, ln:Ly - colW, wDist:2 * fY, pts:connPts, minB:300, minH:400}));
+    r.gX = designMember(mk({L:Lx, ln:Lx - colW, wDist:2 * fX, pts:r.lsb ? [{P:2 * r.lsb.R, x:Lx / 2}] : [], minB:300, minH:400}));
+    if (!r.gY || !r.gX) return r;
     // 기둥
     var trib = o.colPos === 'interior' ? 1 : (o.colPos === 'edge' ? 0.5 : 0.25);
     var A = Lx * Ly * trib;
-    // 기둥이 받는 보 길이: 내부 = Ly + Lx, 외부(긴 변 쪽 가장자리) = Ly + Lx/2, 모서리 = (Ly + Lx)/2
-    var lenL = o.colPos === 'corner' ? Ly / 2 : Ly, lenS = o.colPos === 'interior' ? Lx : Lx / 2;
-    var beamSW = 1.2 * 24 * ((r.beamLong.b/1000) * ((r.beamLong.h - r.slabT)/1000) * lenL
-                         + (r.beamShort.b/1000) * ((r.beamShort.h - r.slabT)/1000) * lenS);
-    var colB = bar(o.colBar);
-    var c = 300, col;
+    var beamSW = (r.gY.sw * Ly + r.gX.sw * Lx + (r.lsb ? r.lsb.sw * Ly : 0) + (r.conn ? r.conn.sw * px * 2 * (ny - 1) : 0)) * trib;
+    var colB = bar(o.colBar), c = 300, col;
     for (var k = 0; k < 60; k++) {
       var colSW = 1.2 * 24 * (c/1000) * (c/1000) * o.storyH;
       var Pfloor = r.wu * A + beamSW + colSW, Proof = r.wuRoof * A + beamSW + colSW;
-      var Pu = (o.floors - 1) * Pfloor + Proof;                 // kN
-      var Ag = c * c, Ast = Math.ceil(Math.max(4, Math.ceil(0.01 * Ag / colB.A)) / 4) * 4 * colB.A;   // 정사각 대칭 배치(4의 배수)
-      var phiPn = 0.65 * 0.80 * (0.85 * o.fck * (Ag - Ast) + o.fy * Ast) / 1000;   // kN
-      col = {c:c, Pu:Pu, Pfloor:Pfloor, Proof:Proof, A:A, trib:trib, beamSW:beamSW, colSW:colSW, phiPn:phiPn,
-             n:Ast / colB.A, B:colB, Ast:Ast};
+      var Pu = (o.floors - 1) * Pfloor + Proof;
+      var Ag = c * c, n = Math.ceil(Math.max(4, Math.ceil(0.01 * Ag / colB.A)) / 4) * 4, Ast = n * colB.A;
+      var phiPn = 0.65 * 0.80 * (0.85 * o.fck * (Ag - Ast) + o.fy * Ast) / 1000;
+      col = {c:c, Pu:Pu, Pfloor:Pfloor, Proof:Proof, A:A, trib:trib, beamSW:beamSW, colSW:colSW, phiPn:phiPn, n:n, B:colB, Ast:Ast};
       if (phiPn >= Pu) break;
       c += 50;
     }
-    col.c = Math.max(col.c, r.beamLong.b, r.beamShort.b);
-    if (col.c !== c) {
-      var Ag2 = col.c * col.c;
-      col.n = Math.ceil(Math.max(4, Math.ceil(0.01 * Ag2 / colB.A)) / 4) * 4;
-      col.Ast = col.n * colB.A;
+    var cMin = Math.max(col.c, r.gY.b, r.gX.b);
+    if (cMin !== col.c) {
+      var Ag2 = cMin * cMin;
+      col.c = cMin; col.n = Math.ceil(Math.max(4, Math.ceil(0.01 * Ag2 / colB.A)) / 4) * 4; col.Ast = col.n * colB.A;
       col.phiPn = 0.65 * 0.80 * (0.85 * o.fck * (Ag2 - col.Ast) + o.fy * col.Ast) / 1000;
     }
     r.col = col;
-    colGuess = col.c / 1000;
+    colW = col.c / 1000;
   }
   return r;
 }
@@ -542,7 +697,7 @@ function estimate(o){
 
 </script>
 <script>
-var APP_VERSION = 'v1', APP_DATE = '2026.10.18', APP_AUTHOR = '김도훈';
+var APP_VERSION = 'v2', APP_DATE = '2026.10.19', APP_AUTHOR = '김도훈';
 document.getElementById('ver').textContent = APP_VERSION + ' · ' + APP_DATE + ' · made by ' + APP_AUTHOR;
 
 function $(id){ return document.getElementById(id); }
@@ -755,69 +910,121 @@ var USES = [
 ];
 $('eUse').innerHTML = USES.map(function(u, i){ return '<option value="' + i + '">' + u[0] + (u[1] != null ? ' — ' + u[1].toFixed(1) : '') + '</option>'; }).join('');
 $('eBB').innerHTML = barOptions(null, 'D22'); $('eCB').innerHTML = barOptions(null, 'D22');
+$('eLL').value = 3.0;
+function setSeg(id, v){ $(id).querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); }); }
 $('eUse').addEventListener('change', function(){
   var u = USES[+this.value]; if (u[1] != null) $('eLL').value = u[1];
-  $('ePart').value = /사무실/.test(u[0]) ? '1' : '0';
+  setSeg('ePart', /사무실/.test(u[0]) ? '1' : '0');
   renderEst();
 });
-$('eLL').value = 3.0;
-['eLL','eLx','eLy','eFl','eH','eFin','eFck','eFy','ePart','eBB','eCB','eBP'].forEach(function(id){ $(id).addEventListener('input', renderEst); $(id).addEventListener('change', renderEst); });
-bindSeg('eCP', renderEst);
+['eLL','eLx','eLy','eFl','eH','eFin','eFck','eFy','eBB','eCB'].forEach(function(id){ $(id).addEventListener('input', renderEst); $(id).addEventListener('change', renderEst); });
+['ePart','eSmall','eBP','eCP'].forEach(function(id){ bindSeg(id, renderEst); });
 
-function svgPlan(Lx, Ly, pos){
-  var S = 230 / Math.max(2*Lx, 2*Ly), W = 2*Lx*S, H = 2*Ly*S, ox = 20, oy = 14;
-  var s = '';
+var COL_GIRDER = 'var(--accent)', COL_SMALL = '#e08a00';
+function svgPlan(Lx, Ly, pos, small, big){
+  var maxW = big ? 260 : 190;
+  var S = maxW / Math.max(2*Lx, 2*Ly), W = 2*Lx*S, H = 2*Ly*S, ox = 22, oy = 16, s = '';
   var col = pos === 'interior' ? [1,1] : (pos === 'edge' ? [0,1] : [0,0]);
   var cx = ox + col[0]*Lx*S, cy = oy + col[1]*Ly*S;
   var x0 = Math.max(ox, cx - Lx*S/2), x1 = Math.min(ox + W, cx + Lx*S/2), y0 = Math.max(oy, cy - Ly*S/2), y1 = Math.min(oy + H, cy + Ly*S/2);
-  s += '<rect x="' + x0 + '" y="' + y0 + '" width="' + (x1-x0) + '" height="' + (y1-y0) + '" fill="var(--yellow)" opacity="0.35"/>';
+  s += '<rect x="' + x0 + '" y="' + y0 + '" width="' + (x1-x0) + '" height="' + (y1-y0) + '" fill="var(--yellow)" opacity="0.30"/>';
+  var ny = small >= 2 ? small : 1;
+  for (var bx = 0; bx < 2; bx++) for (var by = 0; by < 2; by++) {
+    var X0 = ox + bx*Lx*S, Y0 = oy + by*Ly*S;
+    if (small >= 1) s += '<line x1="' + (X0 + Lx*S/2) + '" y1="' + Y0 + '" x2="' + (X0 + Lx*S/2) + '" y2="' + (Y0 + Ly*S) + '" stroke="' + COL_SMALL + '" stroke-width="2.2" stroke-dasharray="6 3"/>';
+    for (var k = 1; k < ny; k++) {
+      var yy = Y0 + Ly*S*k/ny;
+      s += '<line x1="' + X0 + '" y1="' + yy + '" x2="' + (X0 + Lx*S) + '" y2="' + yy + '" stroke="' + COL_SMALL + '" stroke-width="2.2" stroke-dasharray="6 3"/>';
+    }
+  }
   for (var i = 0; i < 3; i++) {
-    s += '<line x1="' + (ox + i*Lx*S) + '" y1="' + oy + '" x2="' + (ox + i*Lx*S) + '" y2="' + (oy+H) + '" stroke="var(--accent)" stroke-width="3"/>';
-    s += '<line x1="' + ox + '" y1="' + (oy + i*Ly*S) + '" x2="' + (ox+W) + '" y2="' + (oy + i*Ly*S) + '" stroke="var(--accent)" stroke-width="3"/>';
+    s += '<line x1="' + (ox + i*Lx*S) + '" y1="' + oy + '" x2="' + (ox + i*Lx*S) + '" y2="' + (oy+H) + '" stroke="' + COL_GIRDER + '" stroke-width="4"/>';
+    s += '<line x1="' + ox + '" y1="' + (oy + i*Ly*S) + '" x2="' + (ox+W) + '" y2="' + (oy + i*Ly*S) + '" stroke="' + COL_GIRDER + '" stroke-width="4"/>';
   }
   for (var a = 0; a < 3; a++) for (var b = 0; b < 3; b++) {
     var sel = a === col[0] && b === col[1];
-    s += '<rect x="' + (ox + a*Lx*S - 6) + '" y="' + (oy + b*Ly*S - 6) + '" width="12" height="12" fill="' + (sel ? 'var(--bad)' : 'var(--navy)') + '"/>';
+    s += '<rect x="' + (ox + a*Lx*S - 7) + '" y="' + (oy + b*Ly*S - 7) + '" width="14" height="14" fill="' + (sel ? 'var(--bad)' : 'var(--navy)') + '"/>';
   }
-  s += dimText(ox + Lx*S/2, oy + H + 18, 'X ' + Lx + ' m') + '<text x="' + (ox + W + 8) + '" y="' + (oy + Ly*S/2) + '" font-size="11" fill="var(--sub)">Y ' + Ly + ' m</text>';
-  return svgWrap(W + 70, H + 30, s);
+  s += dimText(ox + Lx*S/2, oy + H + 18, 'X ' + Lx + ' m') + '<text x="' + (ox + W + 10) + '" y="' + (oy + Ly*S/2 + 4) + '" font-size="11" fill="var(--sub)">Y ' + Ly + ' m</text>';
+  return svgWrap(W + 80, H + 40, s);
+}
+function legend(){
+  return '<div class="legend"><span><i style="background:var(--accent)"></i>큰보</span><span><i style="background:#e08a00"></i>작은보</span><span><i style="background:var(--bad)"></i>검토 기둥</span><span><i style="background:var(--yellow);opacity:.6"></i>부담면적</span></div>';
+}
+function sumRow(tag, name, size, rebar, sub){
+  return '<div class="srow"><div class="stag ' + tag + '">' + name + '</div><div class="ssize">' + size + '</div><div class="sbar">' + rebar + (sub ? '<div class="ssub">' + sub + '</div>' : '') + '</div></div>';
+}
+function memDetail(title, m){
+  var pts = m.pts.length ? m.pts.map(function(p){ return fx(p.P, 1) + ' kN @' + fx(p.x, 2) + ' m'; }).join(', ') : '없음';
+  return '<details class="card"><summary>' + title + ' · ' + m.b + '×' + m.h + '</summary>' +
+    '<div class="svgw">' + svgBeam(m.b, m.h, 40, 10, m.B.d, m.nP, m.perLayer, m.nN) + '</div>' +
+    '<div class="note" style="text-align:center">아래 하부근 ' + m.nP + '-' + m.B.name + ' (중앙) · 위 상부근 ' + m.nN + '-' + m.B.name + ' (단부)</div>' +
+    '<div class="steps">경간 L = ' + m.L.toFixed(2) + ' m, 순경간 ln = ' + m.ln.toFixed(2) + ' m\n처짐 최소춤 = L/' + m.hminFactor + ' × ' + m.fyAdj.toFixed(3) + ' = ' + fx(m.hmin, 0) + ' mm\n' +
+    '등분포 w = 슬래브 ' + fx(m.wDist, 1) + ' + 자중 ' + fx(m.sw, 1) + ' = ' + fx(m.w, 1) + ' kN/m (계수)\n집중하중(작은보 반력): ' + pts + '\n' +
+    '단순보 최대 M0 = ' + fx(m.M0, 1) + ' kN·m\nM− = M0 × ' + m.rN.toFixed(3) + ' = ' + fx(m.Mneg, 1) + ' kN·m → As ' + f0(m.AsN) + ' mm²\n' +
+    'M+ = M0 × ' + m.rP.toFixed(3) + ' = ' + fx(m.Mpos, 1) + ' kN·m → As ' + f0(m.AsP) + ' mm²\nAs,min ' + f0(m.asMin) + ' mm², 받침 반력 R = ' + fx(m.R, 1) + ' kN</div></details>';
 }
 function renderEst(){
   var o = {LL:+$('eLL').value, Lx:+$('eLx').value, Ly:+$('eLy').value, floors:Math.max(1, Math.round(+$('eFl').value)), storyH:+$('eH').value,
-    finish:+$('eFin').value, partition:$('ePart').value === '1', fck:+$('eFck').value, fy:+$('eFy').value, beamBar:$('eBB').value, colBar:$('eCB').value,
-    beamPos:$('eBP').value, colPos:segVal('eCP')};
+    finish:+$('eFin').value, partition:segVal('ePart') === '1', fck:+$('eFck').value, fy:+$('eFy').value, beamBar:$('eBB').value, colBar:$('eCB').value,
+    beamPos:segVal('eBP'), colPos:segVal('eCP'), small:+segVal('eSmall')};
+  if (o.Lx > 0 && o.Ly > 0) $('planPrev').innerHTML = svgPlan(Math.min(o.Lx, o.Ly), Math.max(o.Lx, o.Ly), o.colPos, o.small, false);
   if (!(o.LL > 0 && o.Lx > 0 && o.Ly > 0 && o.fck > 0 && o.storyH > 0)) { $('estResult').innerHTML = ''; return; }
   if (o.fck > 40) { $('estResult').innerHTML = '<div class="warnbox">fck 40 MPa 이하만 지원합니다.</div>'; return; }
   var r = estimate(o);
-  if (!r.beamLong || !r.beamShort) { $('estResult').innerHTML = '<div class="warnbox">이 조건에서는 단면을 찾지 못했습니다. 스팬이나 철근 지름을 확인해 주세요.</div>'; return; }
-  var bl = r.beamLong, bs = r.beamShort, c = r.col;
-  var html = '';
-  html += '<div class="card"><h2>평면 · 부담면적</h2><div class="svgw">' + svgPlan(r.Lx, r.Ly, o.colPos) + '</div><div class="note">파란 선은 보, 빨간 기둥이 검토 기둥, 노란 영역이 부담면적(' + fx(c.A, 2) + ' m²)입니다. X는 짧은 변(' + r.Lx + ' m), Y는 긴 변(' + r.Ly + ' m)으로 정렬했습니다.</div></div>';
-  html += '<div class="card"><h2>슬래브 · 하중</h2><div class="kv">' +
-    '<span>슬래브 형식</span><b>' + (r.oneWay ? '1방향 (장/단변 ≥ 2)' : '2방향') + '</b>' +
-    '<span>최소 두께</span><b>' + fx(r.slabHmin, 0) + ' → ' + r.slabT + ' mm</b>' +
-    '<span>고정하중 D</span><b>' + fx(r.wD, 2) + ' kN/m²</b>' +
-    '<span>활하중 L</span><b>' + fx(r.wL, 2) + ' kN/m²</b>' +
-    '<span>계수하중 1.2D+1.6L</span><b>' + fx(r.wu, 2) + ' kN/m²</b>' +
-    (r.oneWay ? '<span>슬래브 주근(참고)</span><b>D13 @' + (r.slabSpacing ? Math.floor(r.slabSpacing) : '—') + ' 이하</b>' : '<span>슬래브 최소철근</span><b>' + f0(r.slabAsMin) + ' mm²/m (D13 @' + Math.floor(Math.min(1000*126.7/r.slabAsMin, 450)) + ')</b>') +
-    '</div><div class="steps">t = ' + r.slabRule + '\nD = 24×' + (r.slabT/1000) + ' + 마감 ' + o.finish + ' = ' + fx(r.wD, 2) + ' kN/m² (철근콘크리트 24 kN/m³)\n' +
-    (r.oneWay ? '1방향 주근: Mu = wu·ln²/11 (ln = X − 0.3 m 가정) = ' + fx(r.slabMu, 1) + ' kN·m/m, As = ' + f0(r.slabAs) + ' / 최소 ' + f0(r.slabAsMin) + ' mm²/m' : '2방향 슬래브는 계수법 상세계산 대신 최소 철근량만 표시') + '</div></div>';
-  var beamCard = function(t, b, Lspan){
-    return '<div class="rbox min"><div class="t">' + t + ' · 경간 ' + Lspan + ' m</div><div class="big">' + b.b + '×' + b.h + '<small> mm</small></div>' +
-      '<div class="ln">단부 상부 <b>' + b.nN + '-' + b.B.name + '</b> · 중앙 하부 <b>' + b.nP + '-' + b.B.name + '</b><br>처짐 최소춤 ' + fx(b.hmin, 0) + ' mm (L/' + b.hminFactor + ' × ' + fx(b.fyAdj, 3) + ')</div>' +
-      '<div class="svgw">' + svgBeam(b.b, b.h, 40, 10, b.B.d, b.nP, b.perLayer, b.nN) + '</div>' +
-      '<div class="steps">w = 슬래브 전달 ' + fx(b.w - b.sw, 1) + ' + 자중 ' + fx(b.sw, 1) + ' = ' + fx(b.w, 1) + ' kN/m (계수)\nln = ' + fx(b.ln, 2) + ' m\nM− = ' + b.coef.negLbl + ' = ' + fx(b.Mneg, 1) + ' kN·m → As ' + f0(b.AsN) + ' mm²\nM+ = ' + b.coef.posLbl + ' = ' + fx(b.Mpos, 1) + ' kN·m → As ' + f0(b.AsP) + ' mm²\nAs,min ' + f0(b.asMin) + ' mm², φ = 0.85(인장지배)</div></div>';
-  };
-  html += '<div class="card"><h2>보</h2><div class="res2">' + beamCard('긴 방향 보 (Y)', bl, r.Ly) + beamCard('짧은 방향 보 (X)', bs, r.Lx) + '</div>' +
-    '<div class="note">슬래브 하중은 45° 분할(사다리꼴·삼각형)을 휨 등가 등분포하중으로 바꿔 양쪽 슬래브에서 받는 것으로 계산했습니다(일반 구조역학 근사). 모멘트는 KDS 근사해법 계수(2경간 이상, 인접 경간 차 20% 이내, 등분포하중 조건).<span class="lv c">△</span> 보 폭은 춤의 1/2(최소 300 mm)로 가정했고, 단면이 부족하면 춤을 50 mm씩 늘렸습니다.</div></div>';
-  html += '<div class="card"><h2>기둥 (' + (o.colPos === 'interior' ? '내부' : o.colPos === 'edge' ? '외부' : '모서리') + ')</h2><div class="res2">' +
-    '<div class="rbox min"><div class="t">축력만 고려한 최소 단면</div><div class="big">' + c.c + '×' + c.c + '<small> mm</small></div><div class="ln">주근 <b>' + c.n + '-' + c.B.name + '</b> (ρ ' + fx(c.Ast/(c.c*c.c)*100, 2) + '%)<br>Pu = ' + f0(c.Pu) + ' kN ≤ φPn,max = ' + f0(c.phiPn) + ' kN</div>' +
-    '<div class="svgw">' + svgColRect(c.c, c.c, 40, 10, c.B.d, c.n/4 + 1, c.n/4 + 1) + '</div></div>' +
-    '<div class="steps" style="margin-top:0">층당 Pu = wu×A + 보 자중 + 기둥 자중\n = ' + fx(r.wu, 2) + '×' + fx(c.A, 2) + ' + ' + fx(c.beamSW, 1) + ' + ' + fx(c.colSW, 1) + ' = ' + fx(c.Pfloor, 1) + ' kN\n지붕층: 활하중 1.0 kN/m²(점유하지 않는 지붕) → ' + fx(c.Proof, 1) + ' kN\nPu = ' + (o.floors - 1) + '×' + fx(c.Pfloor, 1) + ' + ' + fx(c.Proof, 1) + ' = ' + f0(c.Pu) + ' kN\nφPn,max = 0.65×0.80×[0.85fck(Ag−Ast)+fy·Ast]\n단면은 50 mm 단위, 보 폭 이상, ρ ≥ 1%, 대칭 4의 배수 배근</div></div>' +
-    '<div class="note">기둥은 골조 휨모멘트·지진하중을 빼고 축력만으로 구한 값이라 실제 건물보다 작게 나오는 것이 정상입니다. 활하중 저감은 적용하지 않았습니다(보수적). 하중조합 1.2D+1.6L은 KDS 41 식(1.5-2)<span class="src">S11</span>.</div></div>';
-  $('estResult').innerHTML = html;
+  if (!r.gY || !r.gX || !r.col || (o.small >= 1 && !r.lsb) || (o.small >= 2 && !r.conn)) { $('estResult').innerHTML = '<div class="warnbox">이 조건에서는 단면을 찾지 못했습니다. 스팬이나 철근 지름을 확인해 주세요.</div>'; return; }
+  var c = r.col, bn = function(m){ return '상 ' + m.nN + '-' + m.B.name + ' / 하 ' + m.nP + '-' + m.B.name; };
+  var slabBar = r.oneWay ? 'D13 @' + (r.slabSpacing ? Math.floor(r.slabSpacing) : '—') : '최소 D13 @' + Math.floor(Math.min(1000*126.7/r.slabAsMin, 450));
+  var h = '<div class="card"><h2>한눈에 보기</h2>' +
+    '<div class="svgw">' + svgPlan(r.Lx, r.Ly, o.colPos, o.small, true) + '</div>' + legend() +
+    '<div class="summary">' +
+    sumRow('t-slab', '슬래브', r.slabT + ' mm', slabBar, (r.oneWay ? '1방향' : '2방향') + ' · 패널 ' + fx(r.px, 2) + '×' + fx(r.py, 2) + ' m') +
+    sumRow('t-girder', '큰보 Y', r.gY.b + '×' + r.gY.h, bn(r.gY), '경간 ' + r.Ly + ' m') +
+    sumRow('t-girder', '큰보 X', r.gX.b + '×' + r.gX.h, bn(r.gX), '경간 ' + r.Lx + ' m') +
+    (r.lsb ? sumRow('t-small', '작은보 Y', r.lsb.b + '×' + r.lsb.h, bn(r.lsb), '경간 ' + r.Ly + ' m · X 중앙') : '') +
+    (r.conn ? sumRow('t-small', '연결보 X', r.conn.b + '×' + r.conn.h, bn(r.conn), '경간 ' + fx(r.px, 2) + ' m · ' + (r.ny - 1) + '개/칸') : '') +
+    sumRow('t-col', '기둥', c.c + '×' + c.c, c.n + '-' + c.B.name, (o.colPos === 'interior' ? '내부' : o.colPos === 'edge' ? '외부' : '모서리') + ' · Pu ' + f0(c.Pu) + ' kN') +
+    '</div><div class="note">단위 mm. 상 = 단부 상부근, 하 = 중앙 하부근. 하중: D ' + fx(r.wD, 2) + ' / L ' + fx(r.wL, 2) + ' → 1.2D+1.6L = <b>' + fx(r.wu, 2) + ' kN/m²</b></div></div>';
+  h += '<div class="sec" style="margin:4px 2px 8px">부재별 상세 (눌러서 펼치기)</div>';
+  h += '<details class="card"><summary>슬래브 · ' + r.slabT + ' mm</summary><div class="steps">' + r.slabRule + '\n → 최소 ' + fx(r.slabHmin, 0) + ' mm → ' + r.slabT + ' mm\nD = 24 × ' + (r.slabT/1000) + ' + 마감 ' + o.finish + ' = ' + fx(r.wD, 2) + ' kN/m²\n' +
+    (r.oneWay ? '주근: Mu = wu·ln²/11 (ln = 짧은 변 − 0.3) = ' + fx(r.slabMu, 1) + ' kN·m/m\nAs = ' + f0(r.slabAs) + ' / 최소 ' + f0(r.slabAsMin) + ' mm²/m → D13 @' + Math.floor(r.slabSpacing) + ' (≤ 2h, 300)' : '2방향 슬래브는 최소 철근량만 표시: ' + f0(r.slabAsMin) + ' mm²/m') +
+    '\n보 전달 하중(한쪽 면, 45° 분할 휨 등가): Y방향 보 ' + fx(r.fY, 2) + ' / X방향 보 ' + fx(r.fX, 2) + ' kN/m</div></details>';
+  if (r.conn) h += memDetail('연결보 X', r.conn);
+  if (r.lsb) h += memDetail('작은보 Y', r.lsb);
+  h += memDetail('큰보 Y', r.gY) + memDetail('큰보 X', r.gX);
+  h += '<details class="card"><summary>기둥 · ' + c.c + '×' + c.c + '</summary><div class="svgw">' + svgColRect(c.c, c.c, 40, 10, c.B.d, c.n/4 + 1, c.n/4 + 1) + '</div>' +
+    '<div class="steps">부담면적 A = ' + fx(c.A, 2) + ' m²\n층당 Pu = wu×A + 보 자중 + 기둥 자중 = ' + fx(r.wu, 2) + '×' + fx(c.A, 2) + ' + ' + fx(c.beamSW, 1) + ' + ' + fx(c.colSW, 1) + ' = ' + fx(c.Pfloor, 1) + ' kN\n' +
+    '지붕층(활하중 1.0) = ' + fx(c.Proof, 1) + ' kN\nPu = ' + (o.floors - 1) + '×' + fx(c.Pfloor, 1) + ' + ' + fx(c.Proof, 1) + ' = ' + f0(c.Pu) + ' kN\nφPn,max = 0.65×0.80×[0.85fck(Ag−Ast)+fy·Ast] = ' + f0(c.phiPn) + ' kN\n50 mm 단위, 보 폭 이상, ρ ≥ 1%, 4의 배수 대칭 배근</div></details>';
+  h += '<details class="card"><summary>계산 가정</summary><div class="note" style="margin:0">' +
+    '· 하중조합 1.2D+1.6L(KDS 41 식 1.5-2), 철근콘크리트 24 kN/m³, 활하중 저감 미적용(보수적)<span class="src">S11</span><br>' +
+    '· 하중 전달: 슬래브 → 연결보 → 작은보 → 큰보 → 기둥. 슬래브 하중은 45° 분할(삼각형·사다리꼴)을 휨 등가 등분포로, 작은보 반력은 받는 보에 집중하중으로 전달(양쪽 칸에서 모두 받는 내부 보 기준)<br>' +
+    '· 보 모멘트: 단순보 최대 모멘트 M0에 KDS 근사해법 계수 비율을 곱함(내부 경간 M− = 8/11·M0, M+ = 8/16·M0 / 외측 경간 8/10, 8/14). 등분포만 있으면 wl²/11, wl²/16과 같음<span class="lv c">△</span><br>' +
+    '· 보 폭 = 춤의 1/2(큰보 최소 300, 작은보 최소 250), 단면 부족 시 춤을 50 mm씩 증가, 인장지배(φ = 0.85) 범위 안에서 1단 배근<br>' +
+    '· 기둥은 축력만 고려(골조 휨·지진 제외) — 실제보다 작게 나오는 것이 정상</div></details>';
+  $('estResult').innerHTML = h;
 }
 renderEst();
+
+/* 이형철근 형상 · 롤링마크 그림 */
+(function(){
+  var lugs = function(x0, x1, y0, y1){ var s = ''; for (var x = x0; x < x1; x += 22) s += '<line x1="' + x + '" y1="' + y0 + '" x2="' + (x + 10) + '" y2="' + y1 + '" stroke="var(--steel)" stroke-width="4" stroke-linecap="round"/>'; return s; };
+  var s = '<rect x="10" y="20" width="300" height="34" rx="17" fill="var(--conc)" stroke="var(--conc-s)"/>';
+  s += lugs(24, 300, 22, 52);
+  s += '<line x1="12" y1="37" x2="308" y2="37" stroke="var(--steel)" stroke-width="2.5" opacity=".6"/>';
+  s += '<text x="160" y="76" font-size="11" fill="var(--sub)" text-anchor="middle">비스듬한 돌기 = 마디 · 가운데 길이방향 선 = 리브</text>';
+  $('barShapeSvg').innerHTML = svgWrap(320, 84, s);
+
+  var r = '<rect x="10" y="24" width="340" height="40" rx="20" fill="var(--conc)" stroke="var(--conc-s)"/>';
+  [26, 96, 166, 236, 306].forEach(function(x){ r += '<line x1="' + x + '" y1="26" x2="' + (x + 14) + '" y2="62" stroke="var(--steel)" stroke-width="5" stroke-linecap="round"/>'; });
+  var marks = [['KR', 56, '원산지'], ['HS', 126, '제조사'], ['19', 196, '호칭(D19)'], ['4', 286, '강종(SD400)']];
+  marks.forEach(function(m, i){
+    r += '<text x="' + m[1] + '" y="51" font-size="17" font-weight="800" fill="var(--title)" text-anchor="middle">' + m[0] + '</text>';
+    r += '<line x1="' + m[1] + '" y1="66" x2="' + m[1] + '" y2="80" stroke="var(--sub)"/>';
+    r += '<text x="' + m[1] + '" y="94" font-size="10.5" fill="var(--sub)" text-anchor="middle">' + ['①','②','③','④'][i] + ' ' + m[2] + '</text>';
+  });
+  r += '<text x="180" y="14" font-size="11" fill="var(--sub)" text-anchor="middle">← 1.5 m 간격으로 반복 →</text>';
+  $('rollSvg').innerHTML = svgWrap(360, 102, r);
+})();
 
 if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 </script>

@@ -1,5 +1,5 @@
 // 앱을 수정해서 올릴 때마다 아래 버전 숫자를 올려 주세요 (index.html의 APP_VERSION과 같게)
-var CACHE_NAME = 'rebar-survey-v1';
+var CACHE_NAME = 'rebar-survey-v2';
 var urlsToCache = [
   './',
   './index.html',
